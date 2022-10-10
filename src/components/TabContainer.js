@@ -5,61 +5,65 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Content from './Content';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeTab, createTab, openTab, setActive } from '../store/slice';
+import { getTabIndexFromId } from '../utils/helper';
+import CancelIcon from '@mui/icons-material/Cancel';
+function TabPanel({children, value}) {
+    const activeId = useSelector((state)=>state.activeId)
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index }
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-        {children}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== activeId }
+        >
+            {children}
+        </div>
+    );
 }
 
 export default function TabContainer() {
-  const [value, setValue] = React.useState(0);
+
+  const openedTabs = useSelector((state)=>state.openedTabs)
+  const activeId = useSelector((state)=>state.activeId)
+  const dispatch = useDispatch()
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
+    if(newValue < openedTabs.length){
+        dispatch(setActive(openedTabs[newValue].id))
+    }
+  };
+  const handleNew = (e) => {
+    e.stopPropagation();
+    dispatch(createTab())
+  };
+  const handleClose = (e, id) => {
+    e.stopPropagation();
+    dispatch(closeTab(id))
   };
 
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+        <Tabs value={getTabIndexFromId(openedTabs, activeId)} onChange={handleChange} aria-label="basic tabs example"
+        variant="scrollable" scrollButtons allowScrollButtonsMobile>
+            {openedTabs.map((item, ind) => (
+                <Tab key={item.id}
+                    label={<div style={{display: 'flex', alignItems:'center', textTransform: 'none'}}>
+                            {item.title} 
+                            <CancelIcon onClick={(e)=>handleClose(e, item.id)} className='cancel-icon' sx={{fontSize: 'medium', ml: 2, ':hover': {color: 'secondary.main'}}}/>
+                            </div>}/>
+            ))}
+            <Tab key={0} label={'+ New'} onClick={handleNew}/>
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <Content/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Content/>
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        <Content/>
-      </TabPanel>
+      <>
+        {openedTabs.map((item, ind) => (
+            <TabPanel key={item.id} value={item.id}>
+                <Content data={item}/>
+            </TabPanel>
+        ))}
+      </>
     </Box>
   );
 }

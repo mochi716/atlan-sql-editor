@@ -5,10 +5,9 @@ import "ace-builds/src-min-noconflict/mode-mysql";
 import "ace-builds/src-noconflict/theme-monokai";
 import { useState } from "react";
 
-export default function Editor() {
-    const [value, setValue] = useState('');
+export default function Editor(props) {
     const onChange = (newValue) => {
-        setValue(newValue);
+        props.onChange(newValue)
     }
 
     return (
@@ -21,8 +20,8 @@ export default function Editor() {
                 theme="monokai"
                 name="editor"
                 fontSize={16}
-                minLines={10}
-                maxLines={10}
+                minLines={8}
+                maxLines={16}
                 width="100%"
                 showPrintMargin={false}
                 showGutter
@@ -33,7 +32,7 @@ export default function Editor() {
                     enableLiveAutocompletion: true,
                     enableSnippets: true,
                 }}
-                // value={value}
+                value={props.value}
                 onChange={onChange}
                 showLineNumbers
             />

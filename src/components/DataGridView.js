@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import {
   DataGridPremium,
@@ -8,9 +8,24 @@ import {
 } from '@mui/x-data-grid-premium';
 import { useDemoData } from '@mui/x-data-grid-generator';
 
-export default function DataGridView() {
-  const [pageSize, setPageSize] = React.useState(5);
+export default function DataGridView(props) {
+  const [pageSize, setPageSize] = useState(5);
+  const [columns, setColumns] = useState([]);
+  const [rows, setRows] = useState([]);
+  const [gridKey, setGridKey] = useState('');
   
+  useEffect(() => {
+    if(props.data && props.data.headers && props.data.headers.length > 0 && props.data.rows.length > 0){
+      let temp = [];
+      for(const h of props.data.headers){
+        temp.push({field: h, headerName: h})
+      }
+      setColumns(temp);
+      setRows(props.data.rows);
+      setGridKey(new Date() - 0)
+    }
+  }, [props]);
+
   const { data, loading } = useDemoData({
     dataSet: 'Commodity',
     rowLength: 100,
@@ -29,7 +44,7 @@ export default function DataGridView() {
       'incoTerm',
     ],
   });
-  const columns = [
+  const columns1 = [
     { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'firstName',
@@ -60,7 +75,7 @@ export default function DataGridView() {
         `${params.row.firstName || ''} ${params.row.lastName || ''}`,
     },
   ];
-  const rows = [
+  const rows1 = [
     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -83,7 +98,7 @@ export default function DataGridView() {
         experimentalFeatures={{ newEditingApi: true }}
         pageSize={pageSize}
         onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-        rowsPerPageOptions={[5, 10, 20, 100, 500]}
+        rowsPerPageOptions={[5, 10, 20, 50, 100]}
         pagination
         autoHeight
       />
