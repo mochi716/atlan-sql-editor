@@ -24,8 +24,8 @@ And sort saved queries based on their used time and you can select easily by sea
   - **Total Blocking Time**: `0ms`
   - **Cumulative Layout Shift**: `0`
 
-  - **[GTMetrix](https://gtmetrix.com/)**:
-  <img src="https://github.com/rdmochih/atlan-sql-editor/blob/main/assets/gtmetrix.png?raw=true" width="800">
+- **[GTMetrix](https://gtmetrix.com/)**:
+  <img src="https://github.com/rdmochih/atlan-sql-editor/blob/main/public/assets/gtmetrix.png?raw=true" width="800">
 
 
 
