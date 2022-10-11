@@ -16,22 +16,25 @@ And sort saved queries based on their used time and you can select easily by sea
 - [React-Ace](https://github.com/securingsincity/react-ace)
 
 ## Page Load Time
-- **[web.dev](https://web.dev/measure)**: The load time according to web.dev is **2.2 seconds**. The site also scores **96 points in performance** and **100 points in best practices**. The exact metrics are:
-  - **First Contentful Paint**: `0.8s`
-  - **Speed Index**: `2.4s`
-  - **Largest Contentful Paint**: `3.3s`
-  - **Time to Interactive**: `3.6s`
-  - **Total Blocking Time**: `710ms`
-  - **Cumulative Layout Shift**: `0.005`
-- **Chrome DevTools**: 
-<img width="1440" alt="Screenshot 2021-09-07 at 10 46 26 AM" src="">
+- **[web.dev](https://web.dev/measure)**: 
+  - **First Contentful Paint**: `0.2s`
+  - **Speed Index**: `1.1s`
+  - **Largest Contentful Paint**: `0.6s`
+  - **Time to Interactive**: `0.7s`
+  - **Total Blocking Time**: `0ms`
+  - **Cumulative Layout Shift**: `0`
+
+  - **[GTMetrix](https://gtmetrix.com/)**:
+  <img src="https://github.com/rdmochih/atlan-sql-editor/blob/main/assets/gtmetrix.png?raw=true" width="800">
+
 
 
 ## Optimisations
 - **Avoid named import from MUI library.**
   - `import Box from "@mui/material/Box";` is 6 times faster than 
   - `import { Box } from "@mui/material";`
-- **Used React.lazy()**. Import for `react-ace` editor was long tasks running during page load, Converted it to Lazy loaded component using `React.lazy()` for code-splitting and delaying it's loading.
+- **Used React.lazy()**
+Import for `react-ace` editor was long tasks running during page load, Converted it to Lazy loaded component using `React.lazy()` for code-splitting and delaying it's loading.
 
 
 ## Available Scripts
@@ -43,15 +46,7 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
 ### `yarn build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
