@@ -2,13 +2,15 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeTab, saveTab } from "../store/slice";
 import { parseCSV } from "../utils/helper";
 import DataGridView from "./DataGridView";
-import Editor from "./Editor";
 import SaveQueryButton from "./SaveQueryButton";
+
+const Editor = React.lazy(() => import('./Editor'));
+
 
 const tables = ['categories', 'customers', 'employees', 'orders', 'products', 'regions', 'shippers', 'suppliers', 'territories']
 export default function Content(props) {
@@ -35,7 +37,7 @@ export default function Content(props) {
             console.log(error)
         });
     }
-    
+
     const handleSaveQuery = (name, toClose) => {
         dispatch(saveTab({id: props.data.id, query: query, title: name}))
         if(toClose){
@@ -53,7 +55,9 @@ export default function Content(props) {
     return (
         <Box p={3} pt={1} sx={{flexGrow: 1, borderTop: (theme) => `1px solid ${theme.palette.divider}`}}>
             <Typography sx={{fontSize: '13px', color: 'gray', textAlign: 'left'}}>Possbile table names for test : {tables.join(', ')}</Typography>
-            <Editor value={query} onChange={handleQueryChange}/>
+            <Suspense>
+                <Editor value={query} onChange={handleQueryChange}/>
+            </Suspense>
             <Box sx={{p:1, display: 'flex', justifyContent: 'flex-end'}}>
                 <ButtonGroup variant="text" aria-label="text button group">
                     <Button color='secondary' onClick={handleRunQuery}>Run Query</Button>
