@@ -3,21 +3,21 @@ import { getHistoryTime, getIndexFromId } from '../utils/helper'
 
 const initialState = {
     histories: [
-                {id: 1, title: 'test', query: 'Select * From customers', time: '11:24', color: 'blue'},
-                {id: 2, title: 'from customer', query: 'Select * From orders', time: '10:21', color: 'red'},
-                {id: 3, title: 'detail orders', query: 'Select price, date, time From order_details', time: '09:24', color: 'yellow'},
-                {id: 4, title: 'order relation with details', query: 'Select * From order_details', time: '09:24', color: 'yellow'},
-                {id: 5, title: 'from customers', query: 'Select id, name From customers', time: '09:24', color: 'blue'},
-                {id: 6, title: 'test', query: 'Select * From customers', time: '11:24', color: 'blue'},
-                {id: 7, title: 'from customer', query: 'Select * From orders', time: '10:21', color: 'red'},
-                {id: 8, title: 'detail orders', query: 'Select price, date, time From order_details', time: '09:24', color: 'yellow'},
-                {id: 9, title: 'order relation with details', query: 'Select * From order_details', time: '09:24', color: 'yellow'},
-                {id: 10, title: 'from customers', query: 'Select id, name From customers', time: '09:24', color: 'blue'},
-                {id: 11, title: 'test', query: 'Select * From customers', time: '11:24', color: 'blue'},
-                {id: 12, title: 'from customer', query: 'Select * From orders', time: '10:21', color: 'red'},
-                {id: 13, title: 'detail orders', query: 'Select price, date, time From order_details', time: '09:24', color: 'yellow'},
-                {id: 14, title: 'order relation with details', query: 'Select * From order_details', time: '09:24', color: 'yellow'},
-                {id: 15, title: 'from customers', query: 'Select id, name From customers', time: '09:24', color: 'blue'},
+                {id: 1, title: 'last test', query: 'Select * From customers', time: '01:24', color: 'blue'},
+                {id: 2, title: 'test for categories', query: 'Select * From categories', time: '01:21', color: 'red'},
+                {id: 3, title: 'employees details', query: 'Select birthDate, title, country, extension From employees', time: '09:24', color: 'yellow'},
+                {id: 4, title: 'order relation with details', query: 'Select * From orders', time: '09:24', color: 'yellow'},
+                {id: 5, title: 'some fields of customers', query: 'Select address, city, region fax From customers', time: '09:24', color: 'blue'},
+                {id: 6, title: 'employees test', query: 'Select customerID, city, region From employees', time: '11:24', color: 'blue'},
+                {id: 7, title: 'all products', query: 'Select * From products', time: '10:21', color: 'red'},
+                {id: 8, title: 'regions', query: 'Select * From regions', time: '09:24', color: 'yellow'},
+                {id: 9, title: 'shippers data', query: 'Select * From shippers', time: '09:24', color: 'yellow'},
+                {id: 10, title: 'customers contact data', query: 'Select contactName, contactTitle From customers', time: '09:24', color: 'blue'},
+                {id: 11, title: 'test for territories', query: 'Select * From territories', time: '11:24', color: 'blue'},
+                {id: 12, title: 'all orders', query: 'Select orderDate, shipVia, shipName, shipRegion From orders', time: '10:21', color: 'red'},
+                {id: 13, title: 'categories Name analysis', query: 'Select categoryName, description From categories', time: '09:24', color: 'yellow'},
+                {id: 14, title: 'relation for products', query: 'Select productID, categoryID, unitPrice From products', time: '09:24', color: 'yellow'},
+                {id: 15, title: 'suppliers', query: 'Select id, name From suppliers', time: '09:24', color: 'blue'},
                 ],
     maxTabId: 16,
     openedTabs: [],
@@ -50,6 +50,7 @@ export const mainSlice = createSlice({
             state.histories.push({id: action.payload.id, title: action.payload.title, query: action.payload.query, time: getHistoryTime(), color: 'red'});
             state.openedHistories.push(action.payload.id)
         }
+        state.histories = state.histories.sort((a, b)=>a.time > b.time)
         let ind = getIndexFromId(state.openedTabs, action.payload.id)
         state.openedTabs[ind].title = action.payload.title
         state.openedTabs[ind].query = action.payload.query
