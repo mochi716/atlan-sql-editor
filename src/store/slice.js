@@ -3,21 +3,21 @@ import { getHistoryTime, getIndexFromId } from '../utils/helper'
 
 const initialState = {
     histories: [
-                {id: 1, title: 'last test', query: 'Select * From customers', time: '01:24', color: 'blue'},
-                {id: 2, title: 'test for categories', query: 'Select * From categories', time: '01:21', color: 'red'},
-                {id: 3, title: 'employees details', query: 'Select birthDate, title, country, extension From employees', time: '09:24', color: 'yellow'},
-                {id: 4, title: 'order relation with details', query: 'Select * From orders', time: '09:24', color: 'yellow'},
-                {id: 5, title: 'some fields of customers', query: 'Select address, city, region fax From customers', time: '09:24', color: 'blue'},
-                {id: 6, title: 'employees test', query: 'Select customerID, city, region From employees', time: '11:24', color: 'blue'},
-                {id: 7, title: 'all products', query: 'Select * From products', time: '10:21', color: 'red'},
-                {id: 8, title: 'regions', query: 'Select * From regions', time: '09:24', color: 'yellow'},
-                {id: 9, title: 'shippers data', query: 'Select * From shippers', time: '09:24', color: 'yellow'},
-                {id: 10, title: 'customers contact data', query: 'Select contactName, contactTitle From customers', time: '09:24', color: 'blue'},
-                {id: 11, title: 'test for territories', query: 'Select * From territories', time: '11:24', color: 'blue'},
-                {id: 12, title: 'all orders', query: 'Select orderDate, shipVia, shipName, shipRegion From orders', time: '10:21', color: 'red'},
-                {id: 13, title: 'categories Name analysis', query: 'Select categoryName, description From categories', time: '09:24', color: 'yellow'},
-                {id: 14, title: 'relation for products', query: 'Select productID, categoryID, unitPrice From products', time: '09:24', color: 'yellow'},
-                {id: 15, title: 'suppliers', query: 'Select id, name From suppliers', time: '09:24', color: 'blue'},
+                {id: 1, title: 'last test', query: 'Select * From customers', time: '12:00', color: 'blue'},
+                {id: 2, title: 'test for categories', query: 'Select * From categories', time: '04:10', color: 'red'},
+                {id: 3, title: 'employees details', query: 'Select birthDate, title, country, extension From employees', time: '04:02', color: 'yellow'},
+                {id: 4, title: 'order relation with details', query: 'Select * From orders', time: '03:45', color: 'yellow'},
+                {id: 5, title: 'some fields of customers', query: 'Select address, city, region fax From customers', time: '03:29', color: 'blue'},
+                {id: 6, title: 'employees test', query: 'Select customerID, city, region From employees', time: '03:00', color: 'blue'},
+                {id: 7, title: 'all products', query: 'Select * From products', time: '02:59', color: 'red'},
+                {id: 8, title: 'regions', query: 'Select * From regions', time: '02:50', color: 'yellow'},
+                {id: 9, title: 'shippers data', query: 'Select * From shippers', time: '02:40', color: 'yellow'},
+                {id: 10, title: 'customers contact data', query: 'Select contactName, contactTitle From customers', time: '02:30', color: 'blue'},
+                {id: 11, title: 'test for territories', query: 'Select * From territories', time: '02:12', color: 'blue'},
+                {id: 12, title: 'all orders', query: 'Select orderDate, shipVia, shipName, shipRegion From orders', time: '02:00', color: 'red'},
+                {id: 13, title: 'categories Name analysis', query: 'Select categoryName, description From categories', time: '01:59', color: 'yellow'},
+                {id: 14, title: 'relation for products', query: 'Select productID, categoryID, unitPrice From products', time: '01:35', color: 'yellow'},
+                {id: 15, title: 'suppliers', query: 'Select id, name From suppliers', time: '01:24', color: 'blue'},
                 ],
     maxTabId: 16,
     openedTabs: [],
@@ -38,7 +38,7 @@ export const mainSlice = createSlice({
         let ind = getIndexFromId(state.openedTabs, action.payload.id)
         if(ind === -1){
             state.openedTabs.push({id: action.payload.id, title: action.payload.title, query: action.payload.query})
-            state.openedHistories.push(state.id)
+            state.openedHistories.push(action.payload.id)
         }
         state.activeId = action.payload.id
     },
@@ -50,7 +50,13 @@ export const mainSlice = createSlice({
             state.histories.push({id: action.payload.id, title: action.payload.title, query: action.payload.query, time: getHistoryTime(), color: 'red'});
             state.openedHistories.push(action.payload.id)
         }
-        state.histories = state.histories.sort((a, b)=>a.time > b.time)
+        state.histories = state.histories.sort((a, b)=>{
+          if(a.time < b.time){
+            return 1;
+          }else{
+            return -1;
+          }
+        })
         let ind = getIndexFromId(state.openedTabs, action.payload.id)
         state.openedTabs[ind].title = action.payload.title
         state.openedTabs[ind].query = action.payload.query

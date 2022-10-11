@@ -1,9 +1,8 @@
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import AceEditor from "react-ace";
 import "ace-builds/src-min-noconflict/ext-language_tools";
 import "ace-builds/src-min-noconflict/mode-mysql";
 import "ace-builds/src-noconflict/theme-monokai";
-import { useState } from "react";
 
 export default function Editor(props) {
     const onChange = (newValue) => {

@@ -1,11 +1,13 @@
-import { Box, Button, ButtonGroup, TextField, Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { closeTab, saveTab } from "../store/slice";
 import { parseCSV } from "../utils/helper";
 import DataGridView from "./DataGridView";
 import Editor from "./Editor";
-import QueryTabs from "./QueryTabs";
 import SaveQueryButton from "./SaveQueryButton";
 
 const tables = ['categories', 'customers', 'employees', 'orders', 'products', 'regions', 'shippers', 'suppliers', 'territories']
@@ -33,6 +35,7 @@ export default function Content(props) {
             console.log(error)
         });
     }
+    
     const handleSaveQuery = (name, toClose) => {
         dispatch(saveTab({id: props.data.id, query: query, title: name}))
         if(toClose){

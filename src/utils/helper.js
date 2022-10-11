@@ -34,6 +34,8 @@ export const getTabIndexFromId = (tabs, id) => {
 export const getHistoryTime = () => {
   let now = new Date();
   let hh = now.getHours();
-  hh = hh > 10 ? hh : '0' + hh;
-  return `${hh}:${now.getMinutes()}`
+  let mm = now.getMinutes();
+  hh = hh >= 10 ? hh : '0' + hh;
+  mm = mm >= 10 ? mm : '0' + mm;
+  return `${hh}:${mm}`
 };

@@ -17,3 +17,6 @@ code {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.opened {
+  background-color: rgb(223, 223, 223);
+}

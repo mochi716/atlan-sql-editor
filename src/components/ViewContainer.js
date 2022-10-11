@@ -1,5 +1,4 @@
-import { Box } from '@mui/material';
-import Content from './Content';
+import Box from '@mui/material/Box';
 import History from './History';
 import TabContainer from './TabContainer';
 

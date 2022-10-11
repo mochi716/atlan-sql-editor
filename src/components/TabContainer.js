@@ -1,14 +1,12 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Content from './Content';
-import { useDispatch, useSelector } from 'react-redux';
-import { closeTab, createTab, openTab, setActive } from '../store/slice';
-import { getTabIndexFromId } from '../utils/helper';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import * as React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { closeTab, createTab, setActive } from '../store/slice';
+import { getTabIndexFromId } from '../utils/helper';
+import Content from './Content';
 function TabPanel({children, value}) {
     const activeId = useSelector((state)=>state.activeId)
 
